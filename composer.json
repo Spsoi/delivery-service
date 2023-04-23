@@ -6,5 +6,11 @@
         "files": [
             "app/Helpers/helpers.php"
         ]
+    },
+    "require": {
+        "illuminate/database": "^10.8",
+        "phpoption/phpoption": "^1.9",
+        "vlucas/phpdotenv": "^5.5",
+        "illuminate/support": "^10.8"
     }
 }
