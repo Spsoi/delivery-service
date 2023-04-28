@@ -14,8 +14,9 @@ class CreateOrdersTable extends Migration
             $table->string('name')->nullable();
             $table->unsignedInteger('seller_address_id')->nullable();
             $table->unsignedInteger('delivery_address_id')->nullable();
-            $table->decimal('delivery_cost', 10, 2)->nullable();
-            $table->decimal('price', 10, 2)->nullable();
+            $table->decimal('delivery_price', 10, 2)->nullable();
+            $table->decimal('products_price', 10, 2)->nullable();
+            $table->decimal('total_price', 10, 2)->nullable();
             $table->string('description')->nullable();
             $table->integer('status')->nullable();
             $table->timestamp('created_at')->default($this->schema->getConnection()->raw('CURRENT_TIMESTAMP'));

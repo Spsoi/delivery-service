@@ -14,6 +14,7 @@ class CreateAddressTable extends Migration
             $table->string('city');
             $table->string('postal_code');
             $table->string('country');
+            $table->decimal('price', 10, 8);
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->timestamp('created_at')->default($this->schema->getConnection()->raw('CURRENT_TIMESTAMP'));
