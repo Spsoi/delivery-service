@@ -25,9 +25,9 @@ if (count($request_uri_parts) > 1) {
 }
 
 foreach ($routes as $route) {
+
     if ($request_uri === $route['uri'] && $request_method === $route['method']) {
         $handler = $route['handler'];
-
         $controller = new $handler[0]($request);
         $action = $handler[1];
         $controller->$action();
