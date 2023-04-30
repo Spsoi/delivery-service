@@ -9,7 +9,7 @@ function response($data, $status = 200, $headers = [])
     }
 
     header('Content-Type: application/json');
-    echo json_encode($data);
+    echo json_encode($data, 200, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 }
 
 if (!function_exists('env')) {
