@@ -10,10 +10,11 @@ class AddOrdersToTableOrder extends Migration
         $currentDate = new DateTime();
         $randomDays = rand(1, 5);
         $currentDate->modify("+ $randomDays day");
-        // TODO добавить цену доставки и цену продуктов delivery_deadline
         $orders = [
             [
-                'user_id' => 1,
+                'customer_id' => 1,
+                'seller_id' => 7,
+                'delivery_id' => 5,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 18,
                 'name' => 'Orders 1',
@@ -26,7 +27,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 10.50 + 10.50,
             ],
             [
-                'user_id' => 2,
+                'customer_id' => 2,
+                'seller_id' => 8,
+                'delivery_id' => 4,
                 'seller_address_id' => 2,
                 'delivery_address_id' => 10,
                 'name' => 'Orders 2',
@@ -39,7 +42,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 15.75 + 15.75,
             ],
             [
-                'user_id' => 3,
+                'customer_id' => 3,
+                'seller_id' => 9,
+                'delivery_id' => 6,
                 'seller_address_id' => 2,
                 'delivery_address_id' => 13,
                 'name' => 'Orders 3',
@@ -52,7 +57,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 20.00 + 20.00,
             ],
             [
-                'user_id' => 1,
+                'customer_id' => 1,
+                'seller_id' => 7,
+                'delivery_id' => 5,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 17,
                 'name' => 'Orders 4',
@@ -65,7 +72,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 5.00 + 5.00,
             ],
             [
-                'user_id' => 2,
+                'customer_id' => 2,
+                'seller_id' => 8,
+                'delivery_id' => 4,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 12,
                 'name' => 'Orders 5',
@@ -78,7 +87,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 30.00 + 30.00,
             ],
             [
-                'user_id' => 3,
+                'customer_id' => 3,
+                'seller_id' => 9,
+                'delivery_id' => 6,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 11,
                 'name' => 'Orders 6',
@@ -91,7 +102,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 8.99 + 8.99,
             ],
             [
-                'user_id' => 1,
+                'customer_id' => 1,
+                'seller_id' => 7,
+                'delivery_id' => 5,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 16,
                 'name' => 'Orders 7',
@@ -104,7 +117,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 12.50 + 12.50,
             ],
             [
-                'user_id' => 2,
+                'customer_id' => 2,
+                'seller_id' => 8,
+                'delivery_id' => 4,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 14,
                 'name' => 'Orders 8',
@@ -117,7 +132,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 19.99 + 19.99,
             ],
             [
-                'user_id' => 3,
+                'customer_id' => 3,
+                'seller_id' => 9,
+                'delivery_id' => 6,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 15,
                 'name' => 'Orders 9',
@@ -130,7 +147,9 @@ class AddOrdersToTableOrder extends Migration
                 'total_price' => 25.00 + 25.00,
             ],
             [
-                'user_id' => 3,
+                'customer_id' => 3,
+                'seller_id' => 7,
+                'delivery_id' => 5,
                 'seller_address_id' => 1,
                 'delivery_address_id' => 20,
                 'name' => 'Orders 10',

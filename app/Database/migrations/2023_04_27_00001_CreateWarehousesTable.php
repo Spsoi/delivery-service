@@ -10,19 +10,19 @@ class CreateWarehousesTable extends Migration
     {
         $this->schema->create($this->tableName, function ($table) {
             $table->unsignedInteger('id')->autoIncrement();
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('seller_id')->nullable();
             $table->unsignedInteger('address_id')->nullable();
             $table->boolean('is_warehouse');
             $table->timestamp('created_at')->default($this->schema->getConnection()->raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default($this->schema->getConnection()->raw('CURRENT_TIMESTAMP'));
             $table->timestamp('deleted_at')->nullable();
         
-            $table->foreign('user_id', 'fk_warehouse_user_id_users_id_foreign')
+            $table->foreign('seller_id', 'fk_Warehouse_seller_id_Users_id_foreign')
                     ->references('id')
                     ->on('users')
                     ->onDelete('set null');
 
-            $table->foreign('address_id', 'fk_warehouse_address_id_addresses_id_foreign')
+            $table->foreign('address_id', 'fk_Warehouse_address_id_Addresses_id_foreign')
                     ->references('id')
                     ->on('addresses')
                     ->onDelete('set null');

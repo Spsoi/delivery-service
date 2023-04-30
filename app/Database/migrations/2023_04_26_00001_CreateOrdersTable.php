@@ -12,7 +12,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('id')->autoIncrement();
             $table->timestamp('delivery_deadline')->nullable(); // дата когда нужно доставить
             $table->timestamp('delivery_completed_at')->nullable(); // дата доставки
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('customer_id')->nullable();
+            $table->unsignedInteger('seller_id')->nullable();
+            $table->unsignedInteger('delivery_id')->nullable();
             $table->string('name')->nullable();
             $table->unsignedInteger('seller_address_id')->nullable();
             $table->unsignedInteger('delivery_address_id')->nullable();
@@ -26,7 +28,19 @@ class CreateOrdersTable extends Migration
             $table->timestamp('deleted_at')->nullable();
 
             
-            $table->foreign('user_id', 'fk_users_orders_user_id_foreign')
+            $table->foreign('customer_id', 'fk_Orders_customer_id_Users_id_foreign')
+                    ->on('users')
+                    ->references('id')
+                    ->onDelete('set null')
+                    ;
+
+            $table->foreign('seller_id', 'fk_Orders_seller_id_Users_id_foreign')
+                    ->on('users')
+                    ->references('id')
+                    ->onDelete('set null')
+                    ;
+
+            $table->foreign('delivery_id', 'fk_Orders_delivery_id_Users_id_foreign')
                     ->on('users')
                     ->references('id')
                     ->onDelete('set null')
