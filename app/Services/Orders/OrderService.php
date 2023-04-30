@@ -32,13 +32,12 @@ class OrderService
         return Order::where('status_id', $status_id)->where('seller_id', $sellerId);
     }
 
-    public static function getOrderByIdForDelivery(int $deliveryId,int $orderId) : object | null
+    public static function getOrderSelect()
     {
-
         $query = Order::select(
             'orders.id as order_id',
             'orders.customer_id as order_customer_id',
-            // 'orders.delivery_id as order_delivery_id',
+            'orders.delivery_id as order_delivery_id',
             'orders.delivery_deadline as order_delivery_deadline',
             'orders.delivery_completed_at as order_delivery_completed_at',
             'orders.status_id as order_status_id',
@@ -57,16 +56,30 @@ class OrderService
             'addresses_delivery.country as delivery_country',
             'users_customer.name as customer_name',
             'users_customer.phone as customer_phone'
-        )
-        
+        );
+
+        return $query;
+    }
+
+    public static function getJoinsSelect($query)
+    {
+        $query->join('order_statuses', 'orders.status_id', '=', 'order_statuses.id')
+            ->join('addresses as addresses_seller', 'orders.seller_address_id', '=', 'addresses_seller.id')
+            ->join('addresses as addresses_delivery', 'orders.delivery_address_id', '=', 'addresses_delivery.id')
+            ->join('users as users_customer', 'orders.customer_id', '=', 'users_customer.id');
+
+        return $query;
+    }
+
+    public static function getOrderByIdForDelivery(int $deliveryId,int $orderId) : object | null
+    {
+
+        $query = self::getOrderSelect();
+        $query = self::getJoinsSelect($query);
         // ->join('order_products', 'orders.id', '=', 'order_products.order_id')
         // ->join('products', 'order_products.product_id', '=', 'products.id') 
-        ->join('order_statuses', 'orders.status_id', '=', 'order_statuses.id')
-        ->join('addresses as addresses_seller', 'orders.seller_address_id', '=', 'addresses_seller.id')
-        ->join('addresses as addresses_delivery', 'orders.delivery_address_id', '=', 'addresses_delivery.id')
-        ->join('users as users_customer', 'orders.customer_id', '=', 'users_customer.id')
-        ->where('orders.id', $orderId)
-        ->where('orders.delivery_id', $deliveryId);
+        $query->where('orders.id', $orderId)
+                ->where('orders.delivery_id', $deliveryId);
 
         ;
         
@@ -130,29 +143,9 @@ class OrderService
 
     public static function getOrderInfo()
     {
-        $query = Order::select(
-            'orders.id as order_id',
-            'orders.customer_id as order_customer_id',
-            'orders.delivery_id as order_delivery_id',
-            'orders.delivery_deadline as order_delivery_deadline',
-            'orders.delivery_completed_at as order_delivery_completed_at',
-            'orders.status_id as order_status_id',
-            'orders.delivery_price as order_delivery_price',
-            'orders.products_price as order_products_price',
-            'orders.total_price as order_total_price',
-            'addresses_seller.street as seller_street',
-            'addresses_seller.city as seller_city',
-            'addresses_seller.postal_code as seller_postal_code',
-            'addresses_seller.country as seller_country',
-            'addresses_delivery.street as delivery_street',
-            'addresses_delivery.city as delivery_city',
-            'addresses_delivery.postal_code as delivery_postal_code',
-            'addresses_delivery.country as delivery_country',
-            'users_customer.name as customer_name',
-            'users_customer.email as customer_email',
-            'users_customer.phone as customer_phone'
-        )
-        ->selectRaw('
+
+        $query = self::getOrderSelect();
+        $query->selectRaw('
             GROUP_CONCAT(
                 JSON_OBJECT(
                     "product_id", products.id,
@@ -163,14 +156,10 @@ class OrderService
             ) AS products
         ')
         ->join('order_products', 'orders.id', '=', 'order_products.order_id')
-        ->join('products', 'order_products.product_id', '=', 'products.id') 
-        ->join('order_statuses', 'orders.status_id', '=', 'order_statuses.id')
-        ->join('addresses as addresses_seller', 'orders.seller_address_id', '=', 'addresses_seller.id')
-        ->join('addresses as addresses_delivery', 'orders.delivery_address_id', '=', 'addresses_delivery.id')
-        ->join('users as users_customer', 'orders.customer_id', '=', 'users_customer.id')
-        ->leftjoin('users as users_delivery', 'orders.delivery_id', '=', 'users_delivery.id')
-        ->groupBy('orders.id', 'orders.status_id', 'addresses_seller.street', 'addresses_seller.city', 'addresses_seller.postal_code', 'addresses_seller.country', 'addresses_delivery.street', 'addresses_delivery.city', 'addresses_delivery.postal_code', 'addresses_delivery.country')
-        ;
+        ->join('products', 'order_products.product_id', '=', 'products.id');
+        $query = self::getJoinsSelect($query);
+        $query->leftjoin('users as users_delivery', 'orders.delivery_id', '=', 'users_delivery.id')
+            ->groupBy('orders.id', 'orders.status_id', 'addresses_seller.street', 'addresses_seller.city', 'addresses_seller.postal_code', 'addresses_seller.country', 'addresses_delivery.street', 'addresses_delivery.city', 'addresses_delivery.postal_code', 'addresses_delivery.country');
 
         return $query;
     }
