@@ -10,13 +10,17 @@ class Order extends BaseModel
 
     protected $fillable = [
         'user_id',
-        'seller_address',
-        'delivery_address',
-        'delivery_cost',
+        'delivery_deadline',
+        'delivery_completed_at',
+        'seller_address_id',
+        'delivery_address_id',
         'status',
         'description',
         'name',
-        'price',
+        'delivery_price',
+        'products_price',
+        'total_price',
+        'status_id',
     ];
 
     protected $hidden = [

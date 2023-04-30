@@ -9,9 +9,11 @@ class Address extends BaseModel
     protected $table = 'addresses';
 
     protected $fillable = [
+        'id',
         'street',
         'city',
         'postal_code',
         'country',
+        
     ];
 }
