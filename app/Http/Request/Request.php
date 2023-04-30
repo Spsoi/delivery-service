@@ -30,6 +30,11 @@ class Request
         return $_POST[$key] ?? $default;
     }
 
+    public function setPost($key, $default = null)
+    {
+        return $_POST[$key] ?? $default;
+    }
+
     public function input($key, $default = null)
     {
         return $_REQUEST[$key] ?? $default;
