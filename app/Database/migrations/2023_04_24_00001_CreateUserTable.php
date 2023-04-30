@@ -14,6 +14,7 @@ class CreateUserTable extends Migration
             $table->unsignedInteger('id')->autoIncrement();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone')->unique();
             $table->string('password');
             $table->unsignedInteger('role_id')->nullable();
             $table->timestamp('created_at')->default($this->schema->getConnection()->raw('CURRENT_TIMESTAMP'));

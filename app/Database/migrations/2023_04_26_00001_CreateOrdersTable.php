@@ -10,6 +10,8 @@ class CreateOrdersTable extends Migration
     {
         $this->schema->create($this->tableName, function ($table) {
             $table->unsignedInteger('id')->autoIncrement();
+            $table->timestamp('delivery_deadline')->nullable(); // дата когда нужно доставить
+            $table->timestamp('delivery_completed_at')->nullable(); // дата доставки
             $table->unsignedInteger('user_id')->nullable();
             $table->string('name')->nullable();
             $table->unsignedInteger('seller_address_id')->nullable();
@@ -23,6 +25,7 @@ class CreateOrdersTable extends Migration
             $table->timestamp('updated_at')->default($this->schema->getConnection()->raw('CURRENT_TIMESTAMP'));
             $table->timestamp('deleted_at')->nullable();
 
+            
             $table->foreign('user_id', 'fk_users_orders_user_id_foreign')
                     ->on('users')
                     ->references('id')
