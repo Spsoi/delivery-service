@@ -9,7 +9,9 @@ class Order extends BaseModel
     protected $table = 'orders';
 
     protected $fillable = [
-        'user_id',
+        'customer_id',
+        'seller_id',
+        'delivery_id',
         'delivery_deadline',
         'delivery_completed_at',
         'seller_address_id',
