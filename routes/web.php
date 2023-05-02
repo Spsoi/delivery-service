@@ -9,7 +9,6 @@ use App\Http\Controllers\SellerController;
 
 Route::get('/test/test', [TestController::class, 'test']);
 Route::get('/run/migration', [RunMigration::class, 'runMigration']);
-Route::get('/api/get_order_list', [RunMigration::class, 'runMigration']);
 
 // customers
 Route::post('/api/customer/calculate/delivery', [CustomerController::class, 'calculateDelivery']);

@@ -12,7 +12,7 @@ class UserService
     {
         $query = User::find($id);
         if (empty($query)) {
-            return throw new Exception('Такого пользователя не существует', 422);
+            return throw new Exception('Такого пользователя не существует', http_response_code(422));
         }
         return $query->join('users_roles', 'users.role_id', '=', 'users_roles.id')
                     ->where('users.id', $id);

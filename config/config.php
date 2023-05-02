@@ -37,5 +37,5 @@ foreach ($routes as $route) {
 }
 
 if (empty($find)) {
-    throw new Exception('Путь не найден', 422);
+    throw new Exception('Путь не найден', http_response_code(422));
 }
