@@ -16,6 +16,9 @@ class CustomerController extends BaseController
 
     public function __construct()
     {
+        $user = $this->getArrayStream();
+        $customer = array_values($user['customer']);
+        \App\Middleware\RateLimitMiddleware::ratelimit(reset($customer)['id']);
     }
 
     protected function getDeliveryCost()
@@ -27,7 +30,7 @@ class CustomerController extends BaseController
         $warehouseModel = $warehouseIns->getWarehouseByAddressId($warehouseId);
         $warehouse = $warehouseModel->get()->first();
         if (empty($warehouse)) {
-            throw new Exception('Склад не найден', 422);
+            throw new Exception('Склад не найден', http_response_code(422));
         }
         $addressServiceIns = new AddressService;
         $costDelivery  = $addressServiceIns->costDelivery($deliveryAddressIds);
