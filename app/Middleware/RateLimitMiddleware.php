@@ -7,7 +7,7 @@ use Exception;
 
 class RateLimitMiddleware {
 
-    public static function ratelimit($user_id, $requests_per_minute = 3) {
+    public static function ratelimit($user_id, $requests_per_minute = 10) {
         $query = Ratelimit::where('user_id', $user_id);
         $requests = $query->first() ? $query->first()->requests : 0;
         if ($requests >= $requests_per_minute) {
